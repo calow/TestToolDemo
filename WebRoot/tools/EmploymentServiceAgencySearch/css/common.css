@@ -1,0 +1,53 @@
+body {
+	background-color: #f3f5f7;
+	font-family: "Microsoft Yahei", Helvetica, Arial, sans-serif;
+}
+
+.h1 {
+	margin: .67rem 0;
+	font-size: 2rem;
+}
+
+.sui-ellipsis {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.title {
+	color: #fff;
+	position: absolute;
+	display: block;
+	width: 80%;
+	padding: 0;
+	margin: 0 -30px 0 25px;
+	font-size: 17px;
+	font-weight: 500;
+	line-height: 44px;
+	text-align: center;
+	white-space: nowrap;
+}
+
+.bar-nav .button-nav {
+	color: #fff;
+}
+
+.bar-nav {
+	background-color: #e4393c;
+}
+
+.bar-footer {
+	background-color: #ffffff;
+}
+
+.popup-button-success {
+	border: 1px solid #e4393c;
+	color: white;
+	background-color: #e4393c;
+}
+
+.popup-button-success:active {
+	border: 1px solid #e4393c;
+	color: white;
+	background-color: #b93534;
+}

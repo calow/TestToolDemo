@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<!-- 开发模式下使用,这样可以打印出更详细的错误信息 -->
+	<constant name="struts-devModel" value="true" />
+	<!-- 该属性指定需要Struts2处理的请求后缀，该属性的默认值是action，即所有匹配*.action的请求都由Struts2处理。
+                       如果用户需要指定多个请求后缀，则多个后缀之间以英文逗号（,）隔开。 -->
+	<constant name="struts.action.extension" value="action,do,api" />
+	<!-- 指定允许上传的文件最大字节数。默认值是2097152(2M) -->
+	<constant name="struts.multipart.maxSize" value="100000000" />
+	<!--解决乱码    -->
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+	<!-- 设置上传文件的临时文件夹,默认使用javax.servlet.context.tempdir -->
+	<constant name="struts.multipart.saveDir" value="/tmp" />
+	<!-- 该属性指定处理multipart/form-data的MIME类型（文件上传）请求的框架，该属性支持cos、pell和jakarta等属性值，
+	即分别对应使用cos的文件上传框架、pell上传及common-fileupload文件上传框架。该属性的默认值为jakarta -->
+	<constant name="struts.multipart.parser" value="jakarta" />
+	
+	<package name="tool" extends="struts-default">
+		<action name="runTool" class="com.calow.action.ToolAction"
+			method="runTool">
+		</action>
+		<action name="actRunTool" class="com.calow.action.ToolAction"
+			method="actRunTool">
+		</action>
+		<action name="runTool4ward" class="com.calow.action.ToolAction"
+			method="runTool4ward">
+		</action>
+	</package>
+</struts>
