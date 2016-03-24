@@ -3,7 +3,6 @@ package com.calow.tool.action;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.calow.cim.nio.mutual.RunToolParam;
 import com.calow.cim.nio.mutual.Tool;
 import com.calow.tool.server.ToolServer1;
-import com.google.gson.Gson;
 
 public class ToolAction1 extends Tool {
 
@@ -56,20 +54,4 @@ public class ToolAction1 extends Tool {
 			e.printStackTrace();
 		}
 	}
-	
-	public void postResult(HttpServletResponse response,
-			HashMap<String, Object> datamap) {
-		PrintWriter pw = null;
-		try {
-			pw = response.getWriter();
-			pw.write(new Gson().toJson(datamap));
-			pw.flush();
-		} catch (IOException e) {
-			datamap.put("code", 500);
-			e.printStackTrace();
-		} finally {
-			pw.close();
-		}
-	}
-
 }
