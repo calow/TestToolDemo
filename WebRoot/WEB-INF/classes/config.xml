@@ -4,7 +4,7 @@
 <Config>
 	<!-- 工具的名称 -->
 	<ToolName>
-		EmploymentServiceAgencySearch
+		ToolAction1
 	</ToolName>
 	<!-- 作者 -->
 	<Author>
@@ -16,7 +16,7 @@
 	</Version>
 	<!-- 需要加载器加载的类(入口类)的全名 -->
 	<EntryClass>
-		com.calow.tool.action.EmploymentServiceAgencySearch
+		com.calow.tool.action.ToolAction1
 	</EntryClass>
 
 	<!-- 描述 -->

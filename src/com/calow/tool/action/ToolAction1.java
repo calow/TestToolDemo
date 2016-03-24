@@ -17,7 +17,7 @@ public class ToolAction1 extends Tool {
 
 	@Override
 	public void act(HttpServletRequest request, HttpServletResponse response) {
-		String toolAction = (String) request.getAttribute("toolAction");
+		String toolAction = (String) request.getParameter("toolAction");
 		if(toolAction.equals("test")){
 			testAction(request, response);
 		}

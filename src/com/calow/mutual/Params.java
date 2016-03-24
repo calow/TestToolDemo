@@ -13,8 +13,6 @@ public class Params implements Serializable {
 	
 	private String userAccount;
 	
-	private String toolAction;
-	
 	private String url;
 	
 	private String path;
@@ -35,14 +33,6 @@ public class Params implements Serializable {
 
 	public void setUserAccount(String userAccount) {
 		this.userAccount = userAccount;
-	}
-
-	public String getToolAction() {
-		return toolAction;
-	}
-
-	public void setToolAction(String toolAction) {
-		this.toolAction = toolAction;
 	}
 
 	public String getUrl() {
