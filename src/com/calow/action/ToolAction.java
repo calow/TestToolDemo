@@ -1,15 +1,27 @@
 package com.calow.action;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.HashMap;
+import java.util.jar.JarFile;
+import java.util.zip.ZipEntry;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
+import org.dom4j.io.SAXReader;
 
+import com.calow.cim.nio.mutual.Tool;
 import com.calow.mutual.Params;
+import com.calow.server.ToolServer;
+import com.calow.util.ContextHolder;
 import com.google.gson.Gson;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -29,18 +41,56 @@ public class ToolAction extends ActionSupport implements ModelDriven<Params> {
 	}
 	
 	public void runTool(){
+		System.out.println("runTool...");
+		String toolName = params.getToolName();
 		HttpServletResponse response = ServletActionContext.getResponse();
 		HttpServletRequest request = ServletActionContext.getRequest();
+		request.setAttribute("userAccount", params.getUserAccount());
+		request.setAttribute("forwardUrl", "runTool4ward.action?url=/WEB-INF/" + toolName + "/pages/&toolName=" + toolName);
+		request.setAttribute("resourceUrl", "tools/" + toolName + "/");
+		request.setAttribute("requestUrl", "actRunTool.action?placeholder=1");
+		try {
+			request.getRequestDispatcher("/WEB-INF/" + toolName + "/pages/main.jsp").forward(request, response);
+		} catch (ServletException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void actRunTool(){
+		System.out.println("actRunTool...");
 		HttpServletResponse response = ServletActionContext.getResponse();
 		HttpServletRequest request = ServletActionContext.getRequest();
+		String clazzName = SAX("EntryClass");
+		ToolServer toolService = (ToolServer) ContextHolder
+				.getBean("toolServer");
+		try {
+			Class<?> myClass = getClass().getClassLoader().loadClass(clazzName);
+			Tool tool = (Tool) myClass.newInstance();
+			toolService.initTool(tool, request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void runTool4ward(){
+		System.out.println("runTool4ward...");
+		String toolName = params.getToolName();
+		String path = params.getPath();
 		HttpServletResponse response = ServletActionContext.getResponse();
 		HttpServletRequest request = ServletActionContext.getRequest();
+		request.setAttribute("forwardUrl", "runTool4ward.action?url=/WEB-INF/" + toolName + "/pages/&toolName=" + toolName);
+		request.setAttribute("resourceUrl", "tools/" + toolName + "/");
+		request.setAttribute("requestUrl", "actRunTool.action?placeholder=1");
+		try {
+			request.getRequestDispatcher("/WEB-INF/" + toolName + "/pages/" + path).forward(request, response);
+		} catch (ServletException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("path = " + path);
 	}
 	
 	public void postResult(HttpServletResponse response,
@@ -56,6 +106,23 @@ public class ToolAction extends ActionSupport implements ModelDriven<Params> {
 		} finally {
 			pw.close();
 		}
+	}
+	
+	public String SAX(String entry) {
+		String value = null;
+		try {
+			InputStream inputStream = this.getClass().getClassLoader()
+					.getResourceAsStream("config.xml");
+//			File file = new File("config.xml");
+//			FileInputStream in = new FileInputStream(file);
+			SAXReader reader = new SAXReader();
+			org.dom4j.Document document = reader.read(inputStream);
+			org.dom4j.Element element = document.getRootElement();
+			value = element.elementText(entry).trim();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		return value;
 	}
 
 }
